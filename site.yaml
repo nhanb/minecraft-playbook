@@ -1,0 +1,24 @@
+---
+- hosts: gamesv
+  remote_user: root
+
+  tasks:
+
+  - name: install webupd8 oracle java PPA
+    apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' state=present
+
+  - name: add key for webupd8 oracle java PPA
+    apt_key: keyserver=keyserver.ubuntu.com id=EEA14886
+
+  - name: automatically select the Oracle License
+    tags: java
+    shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
+    changed_when: false
+
+  - name: install oracle JDK 7
+    apt: pkg=oracle-java7-installer state=latest update-cache=yes force=yes
+
+  - name: install vim
+    apt: pkg=vim state=latest
+
+  - include: spigot.yaml

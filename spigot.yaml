@@ -1,0 +1,15 @@
+---
+# As instructed in http://www.spigotmc.org/wiki/spigot-installation/#linux
+
+- name: install git
+  apt: pkg=git state=latest
+
+- name: install tar
+  apt: pkg=tar state=latest
+
+- name: download BuildTools
+  get_url: url=https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
+    dest=/root/BuildTools.jar
+
+- name: run BuildTools to compile Spigot
+  command: java -jar BuildTools.jar chdir=/root/
