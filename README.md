@@ -24,3 +24,7 @@ This playbook runs `/root/prod/tmux.sh` to kick off a spigot server inside a tmu
 # Pitfalls
 
 Don't use spigot's `/restart` command. I'm still trying to figure it out.
+
+# License
+
+See LICENSE file.
