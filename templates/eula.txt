@@ -1,0 +1,2 @@
+# Without this, server won't start
+eula=true
