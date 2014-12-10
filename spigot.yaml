@@ -7,6 +7,9 @@
 - name: install tar
   apt: pkg=tar state=latest
 
+- name: install tmux
+  apt: pkg=tmux state=latest
+
 - name: create dir to store BuildTools and all the stuff it downloads/compiles
   file: dest={{ src_dir }} mode=755 state=directory
 
@@ -20,6 +23,12 @@
 - name: create dir to store production server
   file: dest={{ prod_dir }} mode=755 state=directory
 
+- name: get spigot jar file path
+  shell: ls {{ src_dir }}/Spigot/Spigot-Server/target/spigot-*-SNAPSHOT.jar
+  register: spigot_jar
+
 - name: move compiled server jar to production dir
-  command: mv {{ src_dir }}/Spigot/Spigot-Server/target/spigot-*-SNAPSHOT.jar \
-    {{ prod_dir }}/spigot.jar
+  command: cp {{ spigot_jar.stdout }} {{ prod_dir }}/spigot.jar
+
+- name: create startup script
+  template: src=start.sh dest={{ prod_dir }}/start.sh

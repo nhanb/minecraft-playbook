@@ -1,3 +1,5 @@
 ---
 src_dir: /root/src
 prod_dir: /root/prod
+
+heap_size: 1777M
