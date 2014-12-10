@@ -7,9 +7,19 @@
 - name: install tar
   apt: pkg=tar state=latest
 
+- name: create dir to store BuildTools and all the stuff it downloads/compiles
+  file: dest={{ src_dir }} mode=755 state=directory
+
 - name: download BuildTools
   get_url: url=https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
-    dest=/root/BuildTools.jar
+    dest={{ src_dir }}/BuildTools.jar
 
-- name: run BuildTools to compile Spigot
-  command: java -jar BuildTools.jar chdir=/root/
+- name: run BuildTools to compile Spigot (will take a while)
+  command: java -jar BuildTools.jar chdir={{ src_dir }}/
+
+- name: create dir to store production server
+  file: dest={{ prod_dir }} mode=755 state=directory
+
+- name: move compiled server jar to production dir
+  command: mv {{ src_dir }}/Spigot/Spigot-Server/target/spigot-*-SNAPSHOT.jar \
+    {{ prod_dir }}/spigot.jar

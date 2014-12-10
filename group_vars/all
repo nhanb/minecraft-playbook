@@ -1,2 +1,3 @@
 ---
-droplet_name: mine1g
+src_dir: /root/src
+prod_dir: /root/prod
