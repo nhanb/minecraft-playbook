@@ -30,8 +30,11 @@
 - name: move compiled server jar to production dir
   command: cp {{ spigot_jar.stdout }} {{ prod_dir }}/spigot.jar
 
-- name: write eula.txt
+- name: create eula.txt
   template: src=eula.txt dest={{ prod_dir }}/eula.txt
+
+- name: create server.properties
+  template: src=server.properties dest={{ prod_dir }}/server.properties
 
 - name: create startup script
   template: src=start.sh dest={{ prod_dir }}/start.sh mode=0744
