@@ -1,14 +1,24 @@
----
-# As instructed in http://www.spigotmc.org/wiki/spigot-installation/#linux
+- name: install webupd8 oracle java PPA
+  apt_repository: repo='deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' state=present
 
-- name: install git
-  apt: pkg=git state=latest
+- name: add key for webupd8 oracle java PPA
+  apt_key: keyserver=keyserver.ubuntu.com id=EEA14886
 
-- name: install tar
-  apt: pkg=tar state=latest
+- name: automatically select the Oracle License
+  tags: java
+  shell: echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+  changed_when: false
 
-- name: install tmux
-  apt: pkg=tmux state=latest
+- name: install oracle JDK 7 and update apt cache
+  apt: pkg=oracle-java7-installer state=latest update-cache=yes force=yes
+
+- name: install necessary packages
+  apt: pkg={{ item }} state=latest
+  with_items:
+    - vim
+    - git
+    - tar
+    - tmux
 
 - name: create dir to store BuildTools and all the stuff it downloads/compiles
   file: dest={{ src_dir }} mode=755 state=directory

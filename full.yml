@@ -1,0 +1,4 @@
+---
+- hosts: mine
+  roles:
+    - spigot
