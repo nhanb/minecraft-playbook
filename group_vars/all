@@ -2,8 +2,6 @@
 src_dir: /root/src
 prod_dir: /root/prod
 
-heap_size: 1777M
-
 # server.properties options
 online_mode: false
 # the rest are TODO
